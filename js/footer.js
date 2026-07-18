@@ -19,21 +19,21 @@
           '<div class="footer-col">' +
             '<h3>Explore</h3>' +
             '<ul>' +
-              '<li><a href="#generator">Random word generator</a></li>' +
-              '<li><a href="#features">Features</a></li>' +
-              '<li><a href="#use-cases">Who it&rsquo;s for</a></li>' +
-              '<li><a href="#learn">Word finder guide</a></li>' +
-              '<li><a href="#faq">FAQ</a></li>' +
+              '<li><a href="/#generator">Random word generator</a></li>' +
+              '<li><a href="/#features">Features</a></li>' +
+              '<li><a href="/#use-cases">Who it&rsquo;s for</a></li>' +
+              '<li><a href="/#learn">Word finder guide</a></li>' +
+              '<li><a href="/#faq">FAQ</a></li>' +
             '</ul>' +
           '</div>' +
           '<div class="footer-col">' +
-            '<h3>Popular searches</h3>' +
+            '<h3>Pages</h3>' +
             '<ul>' +
-              '<li><a href="#generator">find words</a></li>' +
-              '<li><a href="#generator">word finder</a></li>' +
-              '<li><a href="#generator">random word</a></li>' +
-              '<li><a href="#generator">english word generator</a></li>' +
-              '<li><a href="#generator">word generator</a></li>' +
+              '<li><a href="/privacy">Privacy policy</a></li>' +
+              '<li><a href="/terms">Terms of Use</a></li>' +
+              '<li><a href="/cookies">Cookies policy</a></li>' +
+              '<li><a href="/about">About</a></li>' +
+              '<li><a href="/contact">Contact</a></li>' +
             '</ul>' +
           '</div>' +
         '</div>' +
