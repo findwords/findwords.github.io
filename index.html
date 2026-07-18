@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Find Words — Random English Word Generator &amp; Word Finder</title>
+<meta name="description" content="Find Words is a free random English word generator and word finder. Generate a random word by length, difficulty or part of speech — perfect for vocabulary practice, writing prompts and word games." />
+<meta name="keywords" content="find words, word finder, random word, random english word, random english word generator, english word generator, word generator" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://findwords.github.io/" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Find Words — Random English Word Generator &amp; Word Finder" />
+<meta property="og:description" content="Generate a random English word in one click. Filter by length, difficulty and part of speech. Free, fast and built for learners, teachers, writers and word-game players." />
+<meta property="og:url" content="https://findwords.github.io/" />
+<meta property="og:site_name" content="Find Words" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Find Words — Random English Word Generator &amp; Word Finder" />
+<meta name="twitter:description" content="Free random English word generator with filters for length, difficulty and part of speech. Find words for vocabulary, writing and word games." />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect rx='20' width='100' height='100' fill='%23FF6B5F'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='white' font-family='monospace'%3EF%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/style.css" />
+
+<!-- Schema.org: WebApplication -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Find Words - Random English Word Generator",
+  "url": "https://findwords.github.io/",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any",
+  "description": "A free random English word generator and word finder tool. Generate random words filtered by length, difficulty and part of speech for vocabulary practice, writing prompts and word games.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Random English word generator",
+    "Filter by word length",
+    "Filter by difficulty",
+    "Filter by part of speech",
+    "Filter by starting letter",
+    "Save favorite words",
+    "Copy word to clipboard",
+    "Spoken pronunciation"
+  ]
+}
+</script>
+
+<!-- Schema.org: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://findwords.github.io/" },
+    { "@type": "ListItem", "position": 2, "name": "Random Word Generator", "item": "https://findwords.github.io/#generator" },
+    { "@type": "ListItem", "position": 3, "name": "FAQ", "item": "https://findwords.github.io/#faq" }
+  ]
+}
+</script>
+
+<!-- Schema.org: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a random English word generator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A random English word generator is a tool that instantly returns a randomly chosen word from a large English word bank, often with filters for word length, difficulty or part of speech, so learners, writers and word-game players can find words on demand."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is a random word generator different from a word finder?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A random word generator gives you a surprise word with no starting point, while a word finder is typically used to search for words that match specific letters or patterns, such as for word games. Find Words combines both ideas with random generation plus letter, length and type filters."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this English word generator free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Find Words is completely free, runs entirely in your browser, and does not require an account or sign-up to generate random words."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I filter the random word generator by difficulty or word length?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can filter generated words by length (short, medium, long), difficulty (easy, medium, hard), part of speech (noun, verb, adjective, adverb) and starting letter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who uses a random word generator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Teachers use it for vocabulary drills, students use it for spelling and English practice, writers use it for creative writing prompts, and word-game players use it to warm up for games like Scrabble, Wordle and crossword puzzles."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the word generator work on mobile devices?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Find Words is fully responsive and works on phones, tablets and desktop browsers."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body id="top">
+<a class="skip-link" href="#generator">Skip to word generator</a>
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+
+  <!-- ============================= HERO / GENERATOR ============================= -->
+  <section class="hero" id="generator">
+    <div class="floating-letters" aria-hidden="true">
+      <span style="top:12%;left:6%;font-size:2.2rem;">a</span>
+      <span style="top:70%;left:10%;font-size:1.6rem;animation-delay:1s;">w</span>
+      <span style="top:20%;left:88%;font-size:2.6rem;animation-delay:2s;">e</span>
+      <span style="top:60%;left:92%;font-size:1.8rem;animation-delay:3s;">r</span>
+      <span style="top:85%;left:50%;font-size:2rem;animation-delay:1.5s;">d</span>
+    </div>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">random word &middot; word finder</span>
+        <h1>Find words the moment you<br class="hide-mobile" /> need a <span class="accent">random word</span>.</h1>
+        <p class="lede">Find Words is a free <strong>random English word generator</strong> and <strong>word finder</strong> built for classrooms, writing desks and word-game nights. Tap generate, filter by length, difficulty or part of speech, and get a fresh English word instantly.</p>
+        <div class="hero-stats">
+          <div><strong id="stat-count">300+</strong><span>English words</span></div>
+          <div><strong>4</strong><span>filter types</span></div>
+          <div><strong>0</strong><span>sign-ups needed</span></div>
+        </div>
+        <div class="keyword-row" aria-hidden="true">
+          <span>find words</span><span>word finder</span><span>random word</span>
+          <span>random english word generator</span><span>english word generator</span>
+        </div>
+      </div>
+
+      <div class="generator-panel">
+        <div class="filters-bar">
+          <label for="filter-length">Length
+            <select id="filter-length">
+              <option value="any">Any length</option>
+              <option value="short">Short (3&ndash;5)</option>
+              <option value="medium">Medium (6&ndash;8)</option>
+              <option value="long">Long (9+)</option>
+            </select>
+          </label>
+          <label for="filter-type">Part of speech
+            <select id="filter-type">
+              <option value="any">Any type</option>
+              <option value="noun">Noun</option>
+              <option value="verb">Verb</option>
+              <option value="adjective">Adjective</option>
+              <option value="adverb">Adverb</option>
+            </select>
+          </label>
+          <label for="filter-difficulty">Difficulty
+            <select id="filter-difficulty">
+              <option value="any">Any difficulty</option>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </label>
+          <label for="filter-letter">Starts with
+            <select id="filter-letter">
+              <option value="any">Any letter</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="word-card" id="word-card">
+          <div class="card-top-row">
+            <span class="card-label">your random word</span>
+            <span class="result-count" id="result-count">Loading word bank&hellip;</span>
+          </div>
+
+          <div id="word-display" aria-live="polite"></div>
+
+          <div class="chip-row">
+            <span class="chip chip-noun" id="word-type">noun</span>
+            <span class="chip chip-diff" id="word-diff">easy</span>
+            <span class="chip chip-diff" id="word-len">5 letters</span>
+          </div>
+
+          <div class="card-actions">
+            <button class="btn btn-primary" id="generate-btn" type="button">🎲 Generate word</button>
+            <button class="icon-btn" id="speak-btn" type="button" aria-label="Hear pronunciation">🔊</button>
+            <button class="icon-btn" id="copy-btn" type="button" aria-label="Copy word">📋</button>
+            <button class="btn btn-ghost" id="fav-btn" type="button" aria-pressed="false"><span aria-hidden="true">★</span> <span class="btn-label">Save word</span></button>
+            <button class="icon-btn" id="sound-btn" type="button" aria-pressed="true" aria-label="Mute sound">🔈</button>
+          </div>
+
+          <span class="copy-toast" id="copy-toast"></span>
+        </div>
+
+        <div class="history-strip">
+          <span class="hs-label">Recent:</span>
+          <ul id="history-list"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= HOW IT WORKS ============================= -->
+  <section class="alt-bg" id="how-it-works">
+    <div class="container" style="padding:72px 24px;">
+      <div class="section-head center reveal">
+        <span class="eyebrow">how it works</span>
+        <h2>Four steps to your next word</h2>
+        <p>No sign-up, no downloads — the random word generator runs right in your browser.</p>
+      </div>
+      <div class="steps">
+        <div class="step-card reveal"><span class="step-num">01</span><h3>Set your filters</h3><p>Choose word length, difficulty, part of speech or a starting letter — or leave it wide open.</p></div>
+        <div class="step-card reveal"><span class="step-num">02</span><h3>Tap generate</h3><p>Find Words fetches from the English word bank and flips a fresh random word onto the card.</p></div>
+        <div class="step-card reveal"><span class="step-num">03</span><h3>Hear, copy or save</h3><p>Play the pronunciation, copy the word, or star it to keep it in your favorites list.</p></div>
+        <div class="step-card reveal"><span class="step-num">04</span><h3>Keep exploring</h3><p>Press space or hit generate again to keep finding words for as long as you like.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= FEATURES ============================= -->
+  <section id="features">
+    <div class="container" style="padding:80px 24px;">
+      <div class="section-head center reveal">
+        <span class="eyebrow">features</span>
+        <h2>An english word generator built with real filters</h2>
+        <p>Every feature below exists to make finding the right random word faster.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card reveal"><div class="feature-icon">🎯</div><h3>Length filter</h3><p>Generate short, medium or long English words on demand.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">🔤</div><h3>Starting letter</h3><p>Find words that start with the exact letter you need.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">📚</div><h3>Part of speech</h3><p>Generate a random noun, verb, adjective or adverb.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">🧩</div><h3>Difficulty levels</h3><p>Easy, medium and hard words for every vocabulary stage.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">🔊</div><h3>Spoken pronunciation</h3><p>Hear each random word read aloud with one tap.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">📋</div><h3>One-click copy</h3><p>Copy any generated word straight to your clipboard.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">⭐</div><h3>Saved word list</h3><p>Star favorite words and revisit them any time — stored right in your browser.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">⌨️</div><h3>Keyboard shortcut</h3><p>Press space or enter to generate the next random word instantly.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= USE CASES ============================= -->
+  <section class="alt-bg" id="use-cases">
+    <div class="container" style="padding:72px 24px;">
+      <div class="section-head center reveal">
+        <span class="eyebrow">who it's for</span>
+        <h2>Built for anyone who needs to find words</h2>
+      </div>
+      <div class="usecase-grid">
+        <div class="usecase-card reveal"><span class="usecase-emoji">🎓</span><h3>Students</h3><p>Practice spelling and vocabulary with a random english word every day.</p></div>
+        <div class="usecase-card reveal"><span class="usecase-emoji">🍎</span><h3>Teachers</h3><p>Pull instant vocabulary words for warm-ups, quizzes and worksheets.</p></div>
+        <div class="usecase-card reveal"><span class="usecase-emoji">✍️</span><h3>Writers</h3><p>Break writer's block with a surprise word generator prompt.</p></div>
+        <div class="usecase-card reveal"><span class="usecase-emoji">🀄</span><h3>Word-game fans</h3><p>Warm up for Scrabble, Wordle and crosswords with a word finder.</p></div>
+        <div class="usecase-card reveal"><span class="usecase-emoji">🌍</span><h3>ESL learners</h3><p>Build English vocabulary one random word generator session at a time.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= LEARN / EDUCATIONAL CONTENT ============================= -->
+  <section id="learn">
+    <div class="container" style="padding:80px 24px;">
+      <div class="section-head center reveal">
+        <span class="eyebrow">learn</span>
+        <h2>Everything to know about random word generators</h2>
+      </div>
+
+      <div class="learn-block reveal">
+        <div>
+          <h2>What is a <span class="tag-word">random english word generator</span>?</h2>
+          <p>A random English word generator is a tool that draws a single word, at random, from a stored list of English vocabulary. Instead of typing a word yourself, you tap a button and a <strong>random word</strong> appears — useful whenever you need inspiration rather than a specific answer. Find Words works entirely in your browser: the generator fetches from a local English word bank, so results appear instantly with no network delay.</p>
+          <p>Because every word in the bank is tagged by part of speech and length, the <strong>english word generator</strong> can narrow its picks to exactly what you're practicing, whether that's short easy words for beginners or long, unusual words for advanced vocabulary building.</p>
+        </div>
+        <div class="learn-visual">
+          <div class="mini-tile-row">
+            <span class="mini-tile">noun</span><span class="mini-tile">verb</span><span class="mini-tile">adjective</span><span class="mini-tile">adverb</span>
+          </div>
+          <div class="mini-tile-row">
+            <span class="mini-tile">easy</span><span class="mini-tile">medium</span><span class="mini-tile">hard</span>
+          </div>
+          <div class="mini-tile-row">
+            <span class="mini-tile">3&ndash;5 letters</span><span class="mini-tile">6&ndash;8 letters</span><span class="mini-tile">9+ letters</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="learn-block reveal">
+        <div class="learn-visual" style="order:2;">
+          <p style="margin:0;font-family:var(--font-mono);font-size:0.85rem;color:var(--ink-soft);">generator</p>
+          <p style="margin:0 0 14px;font-family:var(--font-display);font-size:1.4rem;">"give me any word"</p>
+          <p style="margin:0;font-family:var(--font-mono);font-size:0.85rem;color:var(--ink-soft);">finder</p>
+          <p style="margin:0;font-family:var(--font-display);font-size:1.4rem;">"give me a word that fits ___"</p>
+        </div>
+        <div style="order:1;">
+          <h2>Random word generator vs. <span class="tag-word">word finder</span></h2>
+          <p>The two terms overlap but solve slightly different problems. A <strong>random word generator</strong> hands you a word with no constraints beyond the filters you set — it's about discovery and surprise. A <strong>word finder</strong> is usually used the other way around: you already have a partial pattern (a starting letter, a length, letters you're allowed to use) and you want matching words.</p>
+          <ul>
+            <li>Use the <strong>random word</strong> mode when you want a writing prompt, a vocabulary word, or a warm-up for a game.</li>
+            <li>Use the letter and length filters when you need to <strong>find words</strong> that fit a specific slot, like a crossword square or a Scrabble rack.</li>
+          </ul>
+          <p>Find Words combines both: it's a <strong>word generator</strong> first, with word-finder-style filters layered on top so you can generate words that also match your constraints.</p>
+        </div>
+      </div>
+
+      <div class="learn-block reveal">
+        <div>
+          <h2>Why use an <span class="tag-word">english word generator</span>?</h2>
+          <ul>
+            <li><strong>Vocabulary growth</strong> — regularly meeting new random English words builds recognition faster than passive reading alone.</li>
+            <li><strong>Writing prompts</strong> — a surprise word generator result can unstick a blank page in seconds.</li>
+            <li><strong>Classroom speed</strong> — teachers can generate a random word live instead of hunting for one.</li>
+            <li><strong>Game practice</strong> — word-game players use a word finder to rehearse pattern recognition before a match.</li>
+            <li><strong>Spelling drills</strong> — a difficulty filter lets learners step up from easy to hard words gradually.</li>
+          </ul>
+        </div>
+        <div class="learn-visual">
+          <p style="margin:0;color:var(--ink-soft);font-size:0.95rem;">Every word on this page comes from the same word bank component (<code>wordlist.js</code>), fetched once and filtered live in your browser — nothing is sent to a server.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= FAVORITES ============================= -->
+  <section class="alt-bg" id="favorites">
+    <div class="container" style="padding:64px 24px;">
+      <div class="favorites-panel reveal">
+        <span class="eyebrow">your list</span>
+        <h2 style="font-size:1.4rem;margin-bottom:6px;">Saved words</h2>
+        <p style="color:var(--ink-soft);margin:0;">Star any random word from the generator above to keep it here. Saved in your browser only.</p>
+        <p id="favorites-empty" style="color:var(--ink-soft);">No words saved yet — hit the star button on a generated word.</p>
+        <ul id="favorites-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= FAQ ============================= -->
+  <section id="faq">
+    <div class="container" style="padding:80px 24px;">
+      <div class="section-head center reveal">
+        <span class="eyebrow">faq</span>
+        <h2>Common questions about finding words</h2>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">What is a random English word generator?</button>
+          <div class="faq-answer"><p>A random English word generator is a tool that instantly returns a randomly chosen word from a large English word bank, often with filters for word length, difficulty or part of speech, so learners, writers and word-game players can find words on demand.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">How is a random word generator different from a word finder?</button>
+          <div class="faq-answer"><p>A random word generator gives you a surprise word with no starting point, while a word finder is typically used to search for words matching specific letters or patterns, such as for word games. Find Words combines both with random generation plus letter, length and type filters.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Is this English word generator free to use?</button>
+          <div class="faq-answer"><p>Yes. Find Words is completely free, runs entirely in your browser, and doesn't require an account or sign-up to generate random words.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Can I filter the random word generator by difficulty or word length?</button>
+          <div class="faq-answer"><p>Yes. You can filter generated words by length (short, medium, long), difficulty (easy, medium, hard), part of speech (noun, verb, adjective, adverb) and starting letter.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Who uses a random word generator?</button>
+          <div class="faq-answer"><p>Teachers use it for vocabulary drills, students use it for spelling and English practice, writers use it for creative writing prompts, and word-game players use it to warm up for games like Scrabble, Wordle and crossword puzzles.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Does the word generator work on mobile devices?</button>
+          <div class="faq-answer"><p>Yes. Find Words is fully responsive and works on phones, tablets and desktop browsers.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= CTA ============================= -->
+  <section id="cta">
+    <div class="container" style="padding:0 24px 80px;">
+      <div class="cta-banner reveal">
+        <h2>Ready to find your next word?</h2>
+        <p>Jump back to the generator, set your filters, and let Find Words pick a random English word for you.</p>
+        <a class="btn btn-primary" href="#generator">🎲 Generate a random word</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/wordlist.js" defer></script>
+<script src="js/header.js" defer></script>
+<script src="js/footer.js" defer></script>
+<script src="js/app.js" defer></script>
+<script>
+  // Populate the "starts with" letter filter a–z once the DOM is ready.
+  document.addEventListener("DOMContentLoaded", function () {
+    var sel = document.getElementById("filter-letter");
+    if (!sel) return;
+    for (var i = 97; i <= 122; i++) {
+      var letter = String.fromCharCode(i);
+      var opt = document.createElement("option");
+      opt.value = letter;
+      opt.textContent = letter.toUpperCase();
+      sel.appendChild(opt);
+    }
+  });
+</script>
+</body>
+</html>
