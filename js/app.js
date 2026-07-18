@@ -30,26 +30,24 @@
     bindScrollReveal();
     bindYear();
 
-    if (!window.WordListComponent) {
+    var words = loadWordBank();
+    if (!words.length) {
       showLoadError();
       return;
     }
 
-    window.WordListComponent.getWordBank().then(function (words) {
-      state.bank = words;
-      applyFilters(false);
-      renderFavorites();
-      renderWordCard(pickRandom(state.filtered) || words[0], { silent: true });
+    state.bank = words;
+    applyFilters(false);
+    renderFavorites();
+    renderWordCard(pickRandom(state.filtered) || words[0], { silent: true });
 
-      var statCount = document.getElementById("stat-count");
-      if (statCount) statCount.textContent = words.length + "+";
-    });
+    var statCount = document.getElementById("stat-count");
+    if (statCount) statCount.textContent = words.length + "+";
   });
 
   function cacheEls() {
     els.card = document.getElementById("word-card");
     els.wordDisplay = document.getElementById("word-display");
-    els.wordType = document.getElementById("word-type");
     els.wordLen = document.getElementById("word-len");
     els.wordDiff = document.getElementById("word-diff");
     els.generateBtn = document.getElementById("generate-btn");
@@ -63,9 +61,31 @@
     els.favoritesList = document.getElementById("favorites-list");
     els.favoritesEmpty = document.getElementById("favorites-empty");
     els.lengthSelect = document.getElementById("filter-length");
-    els.typeSelect = document.getElementById("filter-type");
     els.diffSelect = document.getElementById("filter-difficulty");
     els.letterSelect = document.getElementById("filter-letter");
+  }
+
+  /* ---------------------------- Word bank ---------------------------- */
+
+  /**
+   * Reads the word data component (js/wordlist.js), which exposes a flat
+   * array of strings on window.WORDLIST, e.g. const WORDLIST = ["water", "words"].
+   * Normalizes casing/whitespace and drops empty or duplicate entries.
+   */
+  function loadWordBank() {
+    var raw = window.WORDLIST;
+    if (!Array.isArray(raw)) return [];
+
+    var seen = Object.create(null);
+    var bank = [];
+    raw.forEach(function (item) {
+      if (typeof item !== "string") return;
+      var word = item.trim().toLowerCase();
+      if (!word || seen[word]) return;
+      seen[word] = true;
+      bank.push(word);
+    });
+    return bank;
   }
 
   /* ---------------------------- Filtering ---------------------------- */
@@ -78,15 +98,12 @@
 
   function applyFilters(regenerate) {
     var lenVal = els.lengthSelect.value;
-    var typeVal = els.typeSelect.value;
     var diffVal = els.diffSelect.value;
     var letterVal = els.letterSelect.value;
 
-    state.filtered = state.bank.filter(function (entry) {
-      var word = entry.w;
+    state.filtered = state.bank.filter(function (word) {
       var difficulty = classifyDifficulty(word);
 
-      if (typeVal !== "any" && entry.t !== typeVal) return false;
       if (diffVal !== "any" && difficulty !== diffVal) return false;
       if (letterVal !== "any" && word.charAt(0).toLowerCase() !== letterVal) return false;
 
@@ -110,7 +127,7 @@
   }
 
   function bindFilterEvents() {
-    [els.lengthSelect, els.typeSelect, els.diffSelect, els.letterSelect].forEach(function (select) {
+    [els.lengthSelect, els.diffSelect, els.letterSelect].forEach(function (select) {
       if (select) select.addEventListener("change", function () { applyFilters(true); });
     });
   }
