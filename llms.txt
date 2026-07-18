@@ -1,0 +1,22 @@
+# LLMs.txt for findwords.github.io
+
+## About This Site
+Find English Words is a website dedicated to helping users find and learn English words. The site is hosted at https://findwords.github.io/.
+
+## Main Pages
+- Homepage: https://findwords.github.io/index.html - The main entry point for finding English words.
+- About Page: https://findwords.github.io/about.html - Information about the website and its purpose.
+- Contact Page: https://findwords.github.io/contact.html - A page to get in touch with the site owner.
+- Privacy Policy: https://findwords.github.io/privacy.html - The site's privacy policy.
+- Terms of Service: https://findwords.github.io/terms.html - The terms and conditions for using the site.
+- Cookies Policy: https://findwords.github.io/cookies.html - Information about the site's use of cookies.
+
+## Key Resources
+- **Robots.txt**: https://findwords.github.io/robots.txt - Instructions for web crawlers.
+- **Stylesheet**: https://findwords.github.io/css/style.css - The main CSS file for styling.
+- **JavaScript**: https://findwords.github.io/js/footer.js - A JavaScript file for footer functionality.
+
+## Repository Information
+- **Source Code**: The project is open-source and available on GitHub at https://github.com/findwords/findwords.github.io.
+- **Primary Languages**: HTML (54.1%), JavaScript (24.3%), CSS (21.6%).
+- **Latest Update**: The most recent commit was on July 19, 2026.
