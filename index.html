@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Find Words — Random English Word Generator &amp; Word Finder</title>
-<meta name="description" content="Find Words is a free random English word generator and word finder. Generate a random word by length, difficulty or part of speech — perfect for vocabulary practice, writing prompts and word games." />
+<meta name="description" content="Find Words is a free random English word generator and word finder. Generate a random word by length, difficulty or starting letter — perfect for vocabulary practice, writing prompts and word games." />
 <meta name="keywords" content="find words, word finder, random word, random english word, random english word generator, english word generator, word generator" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://findwords.github.io/" />
@@ -12,7 +12,7 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Find Words — Random English Word Generator &amp; Word Finder" />
-<meta property="og:description" content="Generate a random English word in one click. Filter by length, difficulty and part of speech. Free, fast and built for learners, teachers, writers and word-game players." />
+<meta property="og:description" content="Generate a random English word in one click. Filter by length, difficulty and starting letter. Free, fast and built for learners, teachers, writers and word-game players." />
 <meta property="og:url" content="https://findwords.github.io/" />
 <meta property="og:site_name" content="Find Words" />
 <meta property="og:locale" content="en_US" />
@@ -20,7 +20,7 @@
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Find Words — Random English Word Generator &amp; Word Finder" />
-<meta name="twitter:description" content="Free random English word generator with filters for length, difficulty and part of speech. Find words for vocabulary, writing and word games." />
+<meta name="twitter:description" content="Free random English word generator with filters for length, difficulty and starting letter. Find words for vocabulary, writing and word games." />
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect rx='20' width='100' height='100' fill='%23FF6B5F'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='white' font-family='monospace'%3EF%3C/text%3E%3C/svg%3E" />
 
@@ -39,7 +39,7 @@
   "url": "https://findwords.github.io/",
   "applicationCategory": "EducationalApplication",
   "operatingSystem": "Any",
-  "description": "A free random English word generator and word finder tool. Generate random words filtered by length, difficulty and part of speech for vocabulary practice, writing prompts and word games.",
+  "description": "A free random English word generator and word finder tool. Generate random words filtered by length, difficulty and starting letter for vocabulary practice, writing prompts and word games.",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -49,11 +49,11 @@
     "Random English word generator",
     "Filter by word length",
     "Filter by difficulty",
-    "Filter by part of speech",
     "Filter by starting letter",
     "Save favorite words",
     "Copy word to clipboard",
-    "Spoken pronunciation"
+    "Spoken pronunciation",
+    "Keyboard shortcut to generate"
   ]
 }
 </script>
@@ -82,7 +82,7 @@
       "name": "What is a random English word generator?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A random English word generator is a tool that instantly returns a randomly chosen word from a large English word bank, often with filters for word length, difficulty or part of speech, so learners, writers and word-game players can find words on demand."
+        "text": "A random English word generator is a tool that instantly returns a randomly chosen word from a large English word bank, often with filters for word length, difficulty or starting letter, so learners, writers and word-game players can find words on demand."
       }
     },
     {
@@ -90,7 +90,7 @@
       "name": "How is a random word generator different from a word finder?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A random word generator gives you a surprise word with no starting point, while a word finder is typically used to search for words that match specific letters or patterns, such as for word games. Find Words combines both ideas with random generation plus letter, length and type filters."
+        "text": "A random word generator gives you a surprise word with no starting point, while a word finder is typically used to search for words that match specific letters or patterns, such as for word games. Find Words combines both ideas with random generation plus letter, length and difficulty filters."
       }
     },
     {
@@ -106,7 +106,7 @@
       "name": "Can I filter the random word generator by difficulty or word length?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. You can filter generated words by length (short, medium, long), difficulty (easy, medium, hard), part of speech (noun, verb, adjective, adverb) and starting letter."
+        "text": "Yes. You can filter generated words by length (short, medium, long), difficulty (easy, medium, hard) and starting letter."
       }
     },
     {
@@ -149,10 +149,10 @@
       <div class="hero-copy">
         <span class="eyebrow">random word &middot; word finder</span>
         <h1>Find words the moment you<br class="hide-mobile" /> need a <span class="accent">random word</span>.</h1>
-        <p class="lede">Find Words is a free <strong>random English word generator</strong> and <strong>word finder</strong> built for classrooms, writing desks and word-game nights. Tap generate, filter by length, difficulty or part of speech, and get a fresh English word instantly.</p>
+        <p class="lede">Find Words is a free <strong>random English word generator</strong> and <strong>word finder</strong> built for classrooms, writing desks and word-game nights. Tap generate, filter by length, difficulty or starting letter, and get a fresh English word instantly.</p>
         <div class="hero-stats">
           <div><strong id="stat-count">300+</strong><span>English words</span></div>
-          <div><strong>4</strong><span>filter types</span></div>
+          <div><strong>3</strong><span>filter types</span></div>
           <div><strong>0</strong><span>sign-ups needed</span></div>
         </div>
         <div class="keyword-row" aria-hidden="true">
@@ -169,15 +169,6 @@
               <option value="short">Short (3&ndash;5)</option>
               <option value="medium">Medium (6&ndash;8)</option>
               <option value="long">Long (9+)</option>
-            </select>
-          </label>
-          <label for="filter-type">Part of speech
-            <select id="filter-type">
-              <option value="any">Any type</option>
-              <option value="noun">Noun</option>
-              <option value="verb">Verb</option>
-              <option value="adjective">Adjective</option>
-              <option value="adverb">Adverb</option>
             </select>
           </label>
           <label for="filter-difficulty">Difficulty
@@ -204,7 +195,6 @@
           <div id="word-display" aria-live="polite"></div>
 
           <div class="chip-row">
-            <span class="chip chip-noun" id="word-type">noun</span>
             <span class="chip chip-diff" id="word-diff">easy</span>
             <span class="chip chip-diff" id="word-len">5 letters</span>
           </div>
@@ -237,7 +227,7 @@
         <p>No sign-up, no downloads — the random word generator runs right in your browser.</p>
       </div>
       <div class="steps">
-        <div class="step-card reveal"><span class="step-num">01</span><h3>Set your filters</h3><p>Choose word length, difficulty, part of speech or a starting letter — or leave it wide open.</p></div>
+        <div class="step-card reveal"><span class="step-num">01</span><h3>Set your filters</h3><p>Choose word length, difficulty or a starting letter — or leave it wide open.</p></div>
         <div class="step-card reveal"><span class="step-num">02</span><h3>Tap generate</h3><p>Find Words fetches from the English word bank and flips a fresh random word onto the card.</p></div>
         <div class="step-card reveal"><span class="step-num">03</span><h3>Hear, copy or save</h3><p>Play the pronunciation, copy the word, or star it to keep it in your favorites list.</p></div>
         <div class="step-card reveal"><span class="step-num">04</span><h3>Keep exploring</h3><p>Press space or hit generate again to keep finding words for as long as you like.</p></div>
@@ -256,7 +246,7 @@
       <div class="feature-grid">
         <div class="feature-card reveal"><div class="feature-icon">🎯</div><h3>Length filter</h3><p>Generate short, medium or long English words on demand.</p></div>
         <div class="feature-card reveal"><div class="feature-icon">🔤</div><h3>Starting letter</h3><p>Find words that start with the exact letter you need.</p></div>
-        <div class="feature-card reveal"><div class="feature-icon">📚</div><h3>Part of speech</h3><p>Generate a random noun, verb, adjective or adverb.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">📚</div><h3>Instant results</h3><p>Every word appears the moment you tap generate — no loading, no waiting.</p></div>
         <div class="feature-card reveal"><div class="feature-icon">🧩</div><h3>Difficulty levels</h3><p>Easy, medium and hard words for every vocabulary stage.</p></div>
         <div class="feature-card reveal"><div class="feature-icon">🔊</div><h3>Spoken pronunciation</h3><p>Hear each random word read aloud with one tap.</p></div>
         <div class="feature-card reveal"><div class="feature-icon">📋</div><h3>One-click copy</h3><p>Copy any generated word straight to your clipboard.</p></div>
@@ -295,11 +285,11 @@
         <div>
           <h2>What is a <span class="tag-word">random english word generator</span>?</h2>
           <p>A random English word generator is a tool that draws a single word, at random, from a stored list of English vocabulary. Instead of typing a word yourself, you tap a button and a <strong>random word</strong> appears — useful whenever you need inspiration rather than a specific answer. Find Words works entirely in your browser: the generator fetches from a local English word bank, so results appear instantly with no network delay.</p>
-          <p>Because every word in the bank is tagged by part of speech and length, the <strong>english word generator</strong> can narrow its picks to exactly what you're practicing, whether that's short easy words for beginners or long, unusual words for advanced vocabulary building.</p>
+          <p>Because every word in the bank is measured by length and matched to a difficulty level, the <strong>english word generator</strong> can narrow its picks to exactly what you're practicing, whether that's short easy words for beginners or long, unusual words for advanced vocabulary building.</p>
         </div>
         <div class="learn-visual">
           <div class="mini-tile-row">
-            <span class="mini-tile">noun</span><span class="mini-tile">verb</span><span class="mini-tile">adjective</span><span class="mini-tile">adverb</span>
+            <span class="mini-tile">a&ndash;z starting letter</span><span class="mini-tile">case-insensitive</span><span class="mini-tile">no duplicates</span>
           </div>
           <div class="mini-tile-row">
             <span class="mini-tile">easy</span><span class="mini-tile">medium</span><span class="mini-tile">hard</span>
@@ -369,7 +359,7 @@
       <div class="faq-list reveal">
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">What is a random English word generator?</button>
-          <div class="faq-answer"><p>A random English word generator is a tool that instantly returns a randomly chosen word from a large English word bank, often with filters for word length, difficulty or part of speech, so learners, writers and word-game players can find words on demand.</p></div>
+          <div class="faq-answer"><p>A random English word generator is a tool that instantly returns a randomly chosen word from a large English word bank, often with filters for word length, difficulty or starting letter, so learners, writers and word-game players can find words on demand.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">How is a random word generator different from a word finder?</button>
@@ -381,7 +371,7 @@
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">Can I filter the random word generator by difficulty or word length?</button>
-          <div class="faq-answer"><p>Yes. You can filter generated words by length (short, medium, long), difficulty (easy, medium, hard), part of speech (noun, verb, adjective, adverb) and starting letter.</p></div>
+          <div class="faq-answer"><p>Yes. You can filter generated words by length (short, medium, long), difficulty (easy, medium, hard) and starting letter.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">Who uses a random word generator?</button>
@@ -410,10 +400,10 @@
 
 <footer class="site-footer" id="site-footer"></footer>
 
-<script src="js/wordlist.js" defer></script>
-<script src="js/header.js" defer></script>
-<script src="js/footer.js" defer></script>
-<script src="js/app.js" defer></script>
+<script src="/js/wordlist.js" defer></script>
+<script src="/js/header.js" defer></script>
+<script src="/js/footer.js" defer></script>
+<script src="/js/app.js" defer></script>
 <script>
   // Populate the "starts with" letter filter a–z once the DOM is ready.
   document.addEventListener("DOMContentLoaded", function () {
