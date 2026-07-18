@@ -1,9 +1,8 @@
 /**
  * app.js — Find Words application logic
- * Fetches the word bank from the wordlist.js component and drives the
- * random word generator: filters, tile-flip reveal animation,
- * pronunciation, copy-to-clipboard, favorites, recent history,
- * FAQ accordion and scroll-reveal.
+ * Lazy loads the word bank only when needed to improve initial page load time.
+ * Features: random word generation, filters, pronunciation, copy, favorites,
+ * history, FAQ accordion and scroll-reveal.
  */
 (function () {
   "use strict";
@@ -12,12 +11,14 @@
   var STORAGE_SOUND = "findwords.sound.v1";
 
   var state = {
-    bank: [],
-    filtered: [],
-    current: null,
-    history: [],
+    bank: [],          // full word list (lazy loaded)
+    filtered: [],      // words matching current filters
+    current: null,     // currently displayed word
+    history: [],       // recent words (max 8)
     favorites: loadFavorites(),
-    soundOn: loadSoundPref()
+    soundOn: loadSoundPref(),
+    bankLoaded: false, // indicates if wordlist is ready
+    loadingPromise: null // for concurrent load requests
   };
 
   var els = {};
@@ -30,20 +31,20 @@
     bindScrollReveal();
     bindYear();
 
-    var words = loadWordBank();
-    if (!words.length) {
-      showLoadError();
-      return;
-    }
+    // Show placeholder until user generates a word
+    renderPlaceholder();
 
-    state.bank = words;
-    applyFilters(false);
+    // Render favorites and history (empty states)
     renderFavorites();
-    renderWordCard(pickRandom(state.filtered) || words[0], { silent: true });
+    renderHistory();
 
-    var statCount = document.getElementById("stat-count");
-    if (statCount) statCount.textContent = words.length + "+";
+    // Update stat count with placeholder
+    if (els.countLabel) {
+      els.countLabel.textContent = "Click Generate to load words";
+    }
   });
+
+  /* ---------------------------- DOM caching ---------------------------- */
 
   function cacheEls() {
     els.card = document.getElementById("word-card");
@@ -65,27 +66,89 @@
     els.letterSelect = document.getElementById("filter-letter");
   }
 
-  /* ---------------------------- Word bank ---------------------------- */
+  /* ----------------------------------------------------------------
+     Lazy loading of wordlist.js
+  ------------------------------------------------------------------ */
 
   /**
-   * Reads the word data component (js/wordlist.js), which exposes a flat
-   * array of strings on window.WORDLIST, e.g. const WORDLIST = ["water", "words"].
-   * Normalizes casing/whitespace and drops empty or duplicate entries.
+   * Returns a Promise that resolves when the word bank is available.
+   * If already loaded, resolves immediately.
+   * Otherwise, dynamically creates a <script> tag to load wordlist.js
+   * and waits for it to finish.
    */
-  function loadWordBank() {
-    var raw = window.WORDLIST;
-    if (!Array.isArray(raw)) return [];
+  function ensureBankLoaded() {
+    if (state.bankLoaded) {
+      return Promise.resolve();
+    }
 
-    var seen = Object.create(null);
-    var bank = [];
-    raw.forEach(function (item) {
-      if (typeof item !== "string") return;
-      var word = item.trim().toLowerCase();
-      if (!word || seen[word]) return;
-      seen[word] = true;
-      bank.push(word);
+    // If a load is already in progress, return that promise
+    if (state.loadingPromise) {
+      return state.loadingPromise;
+    }
+
+    state.loadingPromise = new Promise(function (resolve, reject) {
+      // Show loading state
+      if (els.countLabel) {
+        els.countLabel.textContent = "Loading word bank…";
+      }
+      renderLoadingWord();
+
+      var script = document.createElement("script");
+      script.src = "/js/wordlist.js";
+      script.async = true;
+
+      script.onload = function () {
+        // wordlist.js should define window.WORDLIST
+        var raw = window.WORDLIST;
+        if (!Array.isArray(raw) || raw.length === 0) {
+          reject(new Error("Wordlist is empty or invalid"));
+          return;
+        }
+
+        // Normalize and deduplicate
+        var seen = Object.create(null);
+        var bank = [];
+        raw.forEach(function (item) {
+          if (typeof item !== "string") return;
+          var word = item.trim().toLowerCase();
+          if (!word || seen[word]) return;
+          seen[word] = true;
+          bank.push(word);
+        });
+
+        if (bank.length === 0) {
+          reject(new Error("No valid words found"));
+          return;
+        }
+
+        state.bank = bank;
+        state.bankLoaded = true;
+        state.loadingPromise = null;
+
+        // Update stats
+        if (els.countLabel) {
+          els.countLabel.textContent = bank.length + " words available";
+        }
+
+        // Clean up the global to avoid memory leaks
+        delete window.WORDLIST;
+
+        resolve();
+      };
+
+      script.onerror = function () {
+        state.loadingPromise = null;
+        if (els.countLabel) {
+          els.countLabel.textContent = "Failed to load word data – please refresh";
+        }
+        renderErrorWord();
+        reject(new Error("Failed to load wordlist.js"));
+      };
+
+      document.head.appendChild(script);
     });
-    return bank;
+
+    return state.loadingPromise;
   }
 
   /* ---------------------------- Filtering ---------------------------- */
@@ -96,7 +159,9 @@
     return "hard";
   }
 
-  function applyFilters(regenerate) {
+  function applyFilters() {
+    if (!state.bankLoaded) return; // no bank yet
+
     var lenVal = els.lengthSelect.value;
     var diffVal = els.diffSelect.value;
     var letterVal = els.letterSelect.value;
@@ -105,7 +170,7 @@
       var difficulty = classifyDifficulty(word);
 
       if (diffVal !== "any" && difficulty !== diffVal) return false;
-      if (letterVal !== "any" && word.charAt(0).toLowerCase() !== letterVal) return false;
+      if (letterVal !== "any" && word.charAt(0) !== letterVal) return false;
 
       if (lenVal !== "any") {
         if (lenVal === "short" && !(word.length <= 5)) return false;
@@ -116,19 +181,25 @@
     });
 
     if (els.countLabel) {
-      els.countLabel.textContent = state.filtered.length === 0
-        ? "No words match these filters yet"
-        : state.filtered.length + " word" + (state.filtered.length === 1 ? "" : "s") + " match your filters";
-    }
-
-    if (regenerate) {
-      generateWord();
+      var count = state.filtered.length;
+      els.countLabel.textContent = count === 0
+        ? "No words match these filters"
+        : count + " word" + (count === 1 ? "" : "s") + " match your filters";
     }
   }
 
   function bindFilterEvents() {
     [els.lengthSelect, els.diffSelect, els.letterSelect].forEach(function (select) {
-      if (select) select.addEventListener("change", function () { applyFilters(true); });
+      if (select) {
+        select.addEventListener("change", function () {
+          // When filters change, if bank is loaded we can regenerate;
+          // otherwise we just store the filter state (applyFilters will be called after bank loads).
+          if (state.bankLoaded) {
+            applyFilters();
+            generateWord(); // generate a new word with the updated filters
+          }
+        });
+      }
     });
   }
 
@@ -141,14 +212,30 @@
   }
 
   function generateWord() {
-    var pool = state.filtered.length ? state.filtered : state.bank;
-    var word = pickRandom(pool);
-    if (!word) {
-      showLoadError();
-      return;
-    }
-    renderWordCard(word);
-    playTick();
+    // If bank not loaded, load it first, then generate.
+    ensureBankLoaded()
+      .then(function () {
+        // Bank is now ready; apply filters (in case they changed while loading)
+        applyFilters();
+
+        var pool = state.filtered.length ? state.filtered : state.bank;
+        var word = pickRandom(pool);
+        if (!word) {
+          // If pool is empty, show error
+          renderErrorWord();
+          if (els.countLabel) {
+            els.countLabel.textContent = "No words match your filters";
+          }
+          return;
+        }
+        renderWordCard(word);
+        playTick();
+      })
+      .catch(function (err) {
+        // Already handled by onerror, but just in case
+        renderErrorWord();
+        console.warn("Wordlist load error:", err);
+      });
   }
 
   function renderWordCard(word, opts) {
@@ -182,6 +269,27 @@
     if (!opts.silent) {
       pushHistory(word);
     }
+  }
+
+  function renderPlaceholder() {
+    els.wordDisplay.innerHTML = '<span class="letter-tile" style="opacity:0.5;">?</span>';
+    els.wordLen.textContent = "—";
+    els.wordDiff.textContent = "—";
+    els.wordDiff.className = "chip chip-diff";
+  }
+
+  function renderLoadingWord() {
+    els.wordDisplay.innerHTML = '<span class="letter-tile" style="animation: pulse 1s infinite;">⋯</span>';
+    els.wordLen.textContent = "loading…";
+    els.wordDiff.textContent = "—";
+    els.wordDiff.className = "chip chip-diff";
+  }
+
+  function renderErrorWord() {
+    els.wordDisplay.innerHTML = '<span class="letter-tile" style="color:#b33;">!</span>';
+    els.wordLen.textContent = "error";
+    els.wordDiff.textContent = "—";
+    els.wordDiff.className = "chip chip-diff";
   }
 
   function bindActionEvents() {
@@ -224,6 +332,8 @@
     }
   }
 
+  /* ---------------------------- Pronunciation ---------------------------- */
+
   function speakCurrent() {
     if (!state.current) return;
     if (!("speechSynthesis" in window)) {
@@ -235,6 +345,8 @@
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utter);
   }
+
+  /* ---------------------------- Copy to clipboard ---------------------------- */
 
   function copyCurrent() {
     if (!state.current) return;
@@ -333,7 +445,8 @@
     var isFav = state.favorites.indexOf(state.current) > -1;
     els.favBtn.classList.toggle("is-active", isFav);
     els.favBtn.setAttribute("aria-pressed", isFav ? "true" : "false");
-    els.favBtn.querySelector(".btn-label").textContent = isFav ? "Saved" : "Save word";
+    var label = els.favBtn.querySelector(".btn-label");
+    if (label) label.textContent = isFav ? "Saved" : "Save word";
   }
 
   function renderFavorites() {
@@ -350,7 +463,10 @@
       wordBtn.type = "button";
       wordBtn.className = "favorite-word";
       wordBtn.textContent = word;
-      wordBtn.addEventListener("click", function () { renderWordCard(word, { silent: true }); scrollToGenerator(); });
+      wordBtn.addEventListener("click", function () { 
+        renderWordCard(word, { silent: true }); 
+        scrollToGenerator(); 
+      });
 
       var removeBtn = document.createElement("button");
       removeBtn.type = "button";
@@ -375,7 +491,7 @@
     if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  /* ---------------------------- Sound ---------------------------- */
+  /* ---------------------------- Sound effects ---------------------------- */
 
   function loadSoundPref() {
     try {
@@ -414,7 +530,7 @@
     } catch (e) { /* audio unavailable, ignore */ }
   }
 
-  /* ---------------------------- FAQ ---------------------------- */
+  /* ---------------------------- FAQ Accordion ---------------------------- */
 
   function bindFaq() {
     var items = document.querySelectorAll(".faq-item");
@@ -436,7 +552,7 @@
     });
   }
 
-  /* ---------------------------- Scroll reveal ---------------------------- */
+  /* ---------------------------- Scroll Reveal ---------------------------- */
 
   function bindScrollReveal() {
     var targets = document.querySelectorAll(".reveal");
@@ -455,17 +571,11 @@
     targets.forEach(function (t) { observer.observe(t); });
   }
 
+  /* ---------------------------- Footer Year ---------------------------- */
+
   function bindYear() {
     var el = document.getElementById("copyright-year");
     if (el) el.textContent = new Date().getFullYear();
   }
 
-  function showLoadError() {
-    if (els.wordDisplay) {
-      els.wordDisplay.innerHTML = '<span class="letter-tile">!</span>';
-    }
-    if (els.countLabel) {
-      els.countLabel.textContent = "Word data failed to load — please refresh the page.";
-    }
-  }
 })();
