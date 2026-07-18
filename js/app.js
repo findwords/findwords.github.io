@@ -142,21 +142,20 @@
 
   function generateWord() {
     var pool = state.filtered.length ? state.filtered : state.bank;
-    var entry = pickRandom(pool);
-    if (!entry) {
+    var word = pickRandom(pool);
+    if (!word) {
       showLoadError();
       return;
     }
-    renderWordCard(entry);
+    renderWordCard(word);
     playTick();
   }
 
-  function renderWordCard(entry, opts) {
+  function renderWordCard(word, opts) {
     opts = opts || {};
-    if (!entry) return;
-    state.current = entry;
+    if (!word) return;
+    state.current = word;
 
-    var word = entry.w;
     var difficulty = classifyDifficulty(word);
 
     // Tile-flip reveal: rebuild letter tiles and animate them in.
@@ -169,8 +168,6 @@
       els.wordDisplay.appendChild(span);
     });
 
-    els.wordType.textContent = entry.t;
-    els.wordType.className = "chip chip-" + entry.t;
     els.wordLen.textContent = word.length + " letters";
     els.wordDiff.textContent = difficulty;
     els.wordDiff.className = "chip chip-diff chip-diff-" + difficulty;
@@ -183,7 +180,7 @@
     updateFavButton();
 
     if (!opts.silent) {
-      pushHistory(entry);
+      pushHistory(word);
     }
   }
 
@@ -233,7 +230,7 @@
       flashToast(els.copyToast, "Pronunciation isn't supported in this browser");
       return;
     }
-    var utter = new SpeechSynthesisUtterance(state.current.w);
+    var utter = new SpeechSynthesisUtterance(state.current);
     utter.rate = 0.9;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utter);
@@ -241,7 +238,7 @@
 
   function copyCurrent() {
     if (!state.current) return;
-    var word = state.current.w;
+    var word = state.current;
     var done = function () { flashToast(els.copyToast, "Copied \u201c" + word + "\u201d"); };
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(word).then(done).catch(function () { fallbackCopy(word, done); });
@@ -274,8 +271,8 @@
 
   /* ---------------------------- History ---------------------------- */
 
-  function pushHistory(entry) {
-    state.history.unshift(entry);
+  function pushHistory(word) {
+    state.history.unshift(word);
     state.history = state.history.slice(0, 8);
     renderHistory();
   }
@@ -290,11 +287,11 @@
       els.historyList.appendChild(li);
       return;
     }
-    state.history.forEach(function (entry) {
+    state.history.forEach(function (word) {
       var li = document.createElement("li");
       li.className = "history-chip";
-      li.textContent = entry.w;
-      li.addEventListener("click", function () { renderWordCard(entry, { silent: true }); });
+      li.textContent = word;
+      li.addEventListener("click", function () { renderWordCard(word, { silent: true }); });
       els.historyList.appendChild(li);
     });
   }
@@ -318,12 +315,12 @@
 
   function toggleFavorite() {
     if (!state.current) return;
-    var word = state.current.w;
-    var idx = state.favorites.findIndex(function (f) { return f.w === word; });
+    var word = state.current;
+    var idx = state.favorites.indexOf(word);
     if (idx > -1) {
       state.favorites.splice(idx, 1);
     } else {
-      state.favorites.unshift(state.current);
+      state.favorites.unshift(word);
       state.favorites = state.favorites.slice(0, 30);
     }
     saveFavorites();
@@ -333,7 +330,7 @@
 
   function updateFavButton() {
     if (!els.favBtn || !state.current) return;
-    var isFav = state.favorites.some(function (f) { return f.w === state.current.w; });
+    var isFav = state.favorites.indexOf(state.current) > -1;
     els.favBtn.classList.toggle("is-active", isFav);
     els.favBtn.setAttribute("aria-pressed", isFav ? "true" : "false");
     els.favBtn.querySelector(".btn-label").textContent = isFav ? "Saved" : "Save word";
@@ -345,23 +342,23 @@
     var hasFavs = state.favorites.length > 0;
     if (els.favoritesEmpty) els.favoritesEmpty.hidden = hasFavs;
 
-    state.favorites.forEach(function (entry) {
+    state.favorites.forEach(function (word) {
       var li = document.createElement("li");
       li.className = "favorite-chip";
 
       var wordBtn = document.createElement("button");
       wordBtn.type = "button";
       wordBtn.className = "favorite-word";
-      wordBtn.textContent = entry.w;
-      wordBtn.addEventListener("click", function () { renderWordCard(entry, { silent: true }); scrollToGenerator(); });
+      wordBtn.textContent = word;
+      wordBtn.addEventListener("click", function () { renderWordCard(word, { silent: true }); scrollToGenerator(); });
 
       var removeBtn = document.createElement("button");
       removeBtn.type = "button";
       removeBtn.className = "favorite-remove";
-      removeBtn.setAttribute("aria-label", "Remove " + entry.w + " from saved words");
+      removeBtn.setAttribute("aria-label", "Remove " + word + " from saved words");
       removeBtn.textContent = "\u00d7";
       removeBtn.addEventListener("click", function () {
-        state.favorites = state.favorites.filter(function (f) { return f.w !== entry.w; });
+        state.favorites = state.favorites.filter(function (f) { return f !== word; });
         saveFavorites();
         updateFavButton();
         renderFavorites();
