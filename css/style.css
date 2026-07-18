@@ -313,7 +313,7 @@ section { position: relative; }
 
 .filters-bar {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-bottom: 16px;
 }
@@ -418,10 +418,6 @@ section { position: relative; }
   color: #fff;
   text-transform: capitalize;
 }
-.chip-noun { background: var(--coral); }
-.chip-verb { background: var(--teal); }
-.chip-adjective { background: var(--gold); color: var(--ink); }
-.chip-adverb { background: var(--violet); }
 .chip-diff { background: var(--paper); color: var(--ink-soft); border: 1.5px solid var(--line); }
 .chip-diff-easy { border-color: var(--teal); color: var(--teal-dark); }
 .chip-diff-medium { border-color: var(--gold); color: var(--gold-dark); }
